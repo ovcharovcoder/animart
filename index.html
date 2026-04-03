@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <title>Магічний магазин | 8 анімацій кошика + 3D Flip відгуки</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="cart-global">
+        <div class="cart-icon-wrapper" id="globalCartWrapper">
+          <div class="cart-badge">
+            <svg
+              class="cart-icon-svg"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.8"
+              fill="none"
+            >
+              <path
+                d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 16.3C4.3 16.9 4.7 17.5 5.4 17.5H18M18 17.5C16.9 17.5 16 18.4 16 19.5C16 20.6 16.9 21.5 18 21.5C19.1 21.5 20 20.6 20 19.5C20 18.4 19.1 17.5 18 17.5ZM9 19.5C9 20.6 8.1 21.5 7 21.5C5.9 21.5 5 20.6 5 19.5C5 18.4 5.9 17.5 7 17.5C8.1 17.5 9 18.4 9 19.5Z"
+              />
+            </svg>
+            <span class="cart-count" id="cartCount">0</span>
+          </div>
+          <div class="cart-total" id="cartTotalDisplay">0 ₴</div>
+        </div>
+      </div>
+      <div class="shop-header">
+        <h1>🎭 8 унікальних анімацій кошика</h1>
+        <p>Кожен товар має свій власний магічний ефект ✨</p>
+      </div>
+      <div class="product-grid" id="productGrid"></div>
+
+      <!-- СЕКЦІЯ 3D ВІДГУКІВ (друга картка з FLIP) -->
+      <div class="testimonials-section">
+        <div class="section-title">🌟 <span>3D Відгуки клієнтів</span> 🌟</div>
+        <div class="testimonials-grid" id="testimonialsGrid"></div>
+      </div>
+      <footer>
+        ⭐ Друга картка відгуку ПОВЕРТАЄТЬСЯ при наведенні! Інші мають 3D
+        ефекти.
+      </footer>
+    </div>
+    <div id="toastMsg" class="toast-msg"></div>
+    <script src="js/main.js"></script>
+  </body>
+</html>
