@@ -1,3 +1,6 @@
+/* ============================================ */
+/* RESET ТА ГЛОБАЛЬНІ СТИЛІ */
+/* ============================================ */
 * {
   margin: 0;
   padding: 0;
@@ -21,7 +24,9 @@ body {
   margin: 0 auto;
 }
 
-/* Header */
+/* ============================================ */
+/* ЗАГОЛОВОК */
+/* ============================================ */
 .shop-header {
   text-align: center;
   margin-bottom: 2.5rem;
@@ -40,7 +45,9 @@ body {
   margin-top: 0.5rem;
 }
 
-/* Global Cart */
+/* ============================================ */
+/* ГЛОБАЛЬНИЙ КОШИК (ВЕРХНІЙ БАР) */
+/* ============================================ */
 .cart-global {
   display: flex;
   justify-content: flex-end;
@@ -100,7 +107,9 @@ body {
   font-size: 0.95rem;
 }
 
-/* Grid 8 cards */
+/* ============================================ */
+/* СІТКА ТОВАРІВ (8 КАРТОК) */
+/* ============================================ */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
@@ -109,7 +118,7 @@ body {
   margin-bottom: 4rem;
 }
 
-/* Product Card */
+/* Картка товару */
 .product-card {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 2rem;
@@ -184,7 +193,9 @@ body {
   box-shadow: 0 5px 14px rgba(230, 126, 34, 0.3);
 }
 
-/* Flying item */
+/* ============================================ */
+/* ЛЕТЮЧИЙ ЕЛЕМЕНТ (ДЛЯ АНІМАЦІЇ ДОДАВАННЯ) */
+/* ============================================ */
 .flying-item {
   position: fixed;
   z-index: 2000;
@@ -210,7 +221,9 @@ body {
   fill: none;
 }
 
-/* Toast */
+/* ============================================ */
+/* TOAST ПОВІДОМЛЕННЯ */
+/* ============================================ */
 .toast-msg {
   position: fixed;
   bottom: 30px;
@@ -232,7 +245,9 @@ body {
   white-space: nowrap;
 }
 
-/* +1 effect */
+/* ============================================ */
+/* ЕФЕКТ "+1" */
+/* ============================================ */
 .plus-one {
   position: fixed;
   font-size: 1.3rem;
@@ -257,6 +272,7 @@ body {
   }
 }
 
+/* Анімація іконки корзини в картці */
 @keyframes cartPopAnim {
   0% {
     transform: scale(1);
@@ -275,7 +291,9 @@ body {
   animation: cartPopAnim 0.4s ease-out;
 }
 
-/* ========== СЕКЦІЯ 3D ВІДГУКІВ (З FLIP ДЛЯ 2-Ї КАРТКИ) ========== */
+/* ============================================ */
+/* СЕКЦІЯ 3D ВІДГУКІВ */
+/* ============================================ */
 .testimonials-section {
   margin-top: 3rem;
   padding: 2rem 0;
@@ -302,7 +320,9 @@ body {
   perspective: 1200px;
 }
 
-/* Стилі для звичайних 3D карток */
+/* ============================================ */
+/* КАРТКА ВІДГУКУ №1 - rotate3d (Олександра) */
+/* ============================================ */
 .testimonial-card {
   width: 280px;
   height: 340px;
@@ -312,15 +332,37 @@ body {
     transform 0.4s ease,
     box-shadow 0.3s;
 }
+.testimonial-card:not(.flip-card) .testimonial-inner {
+  background: white;
+  border-radius: 28px;
+  padding: 1.5rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 245, 200, 0.5);
+  transition: all 0.3s ease;
+}
 
-/* Контейнер для 3D flip (лише для другої картки) */
+/* Картка №1 - обертання при наведенні */
+.testimonial-card[data-anim='rotate3d']:hover .testimonial-inner {
+  transform: rotateY(10deg) rotateX(5deg) scale(1.02);
+  box-shadow: 0 35px 50px -15px rgba(0, 0, 0, 0.3);
+  transition: 0.3s;
+}
+
+/* ============================================ */
+/* КАРТКА ВІДГУКУ №2 - FLIP 3D (Михайло) */
+/* ============================================ */
 .flip-container {
   background: transparent;
   width: 100%;
   height: 100%;
   perspective: 2000px;
 }
-
 .flipper {
   position: relative;
   width: 100%;
@@ -329,8 +371,6 @@ body {
   transform-style: preserve-3d;
   border-radius: 28px;
 }
-
-/* front та back сторони */
 .front,
 .back {
   position: absolute;
@@ -349,33 +389,57 @@ body {
   backdrop-filter: blur(4px);
   border: 1px solid rgba(255, 245, 200, 0.5);
 }
-
 .front {
   transform: rotateY(0deg);
 }
-
 .back {
   transform: rotateY(180deg);
   background: linear-gradient(145deg, #fff5e8, #ffedd5);
 }
-
-/* Картка без flip (інші) - звичайна 3D */
-.testimonial-card:not(.flip-card) .testimonial-inner {
-  background: white;
-  border-radius: 28px;
-  padding: 1.5rem;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(255, 245, 200, 0.5);
-  transition: all 0.3s ease;
+.back-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+.extra-message {
+  font-size: 0.8rem;
+  color: #e67e22;
+  font-weight: 600;
+  margin-top: 1rem;
+  background: rgba(255, 255, 200, 0.6);
+  padding: 8px;
+  border-radius: 20px;
 }
 
-/* Стилі для аватарів */
+/* ============================================ */
+/* КАРТКА ВІДГУКУ №3 - spring (Аліна) */
+/* ============================================ */
+@keyframes springPop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.07);
+  }
+  100% {
+    transform: scale(1.03);
+  }
+}
+.testimonial-card[data-anim='spring']:hover .testimonial-inner {
+  animation: springPop 0.5s cubic-bezier(0.34, 1.3, 0.55, 1);
+  transform: scale(1.03);
+}
+
+/* ============================================ */
+/* КАРТКА ВІДГУКУ №4 - flipX (Дмитро) */
+/* ============================================ */
+.testimonial-card[data-anim='flipX']:hover .testimonial-inner {
+  transform: rotateX(10deg) translateY(-8px);
+  transition: 0.25s;
+}
+
+/* ============================================ */
+/* АВАТАРИ ТА ТЕКСТ ВІДГУКІВ (спільні стилі) */
+/* ============================================ */
 .avatar {
   width: 85px;
   height: 85px;
@@ -414,46 +478,10 @@ body {
   font-size: 1rem;
   margin-top: 0.5rem;
 }
-.back .extra-message {
-  font-size: 0.9rem;
-  color: #e67e22;
-  font-weight: 600;
-  margin-top: 1rem;
-  background: rgba(255, 255, 200, 0.6);
-  padding: 8px;
-  border-radius: 20px;
-}
 
-/* Анімації для інших карток (крім 2-ї) */
-.testimonial-card[data-anim='rotate3d']:hover .testimonial-inner {
-  transform: rotateY(10deg) rotateX(5deg) scale(1.02);
-  box-shadow: 0 35px 50px -15px rgba(0, 0, 0, 0.3);
-  transition: 0.3s;
-}
-
-.testimonial-card[data-anim='spring']:hover .testimonial-inner {
-  animation: springPop 0.5s cubic-bezier(0.34, 1.3, 0.55, 1);
-  transform: scale(1.03);
-}
-
-@keyframes springPop {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.07);
-  }
-  100% {
-    transform: scale(1.03);
-  }
-}
-
-.testimonial-card[data-anim='flipX']:hover .testimonial-inner {
-  transform: rotateX(10deg) translateY(-8px);
-  transition: 0.25s;
-}
-
-/* Анімації появи при скролі */
+/* ============================================ */
+/* АНІМАЦІЇ ПОЯВИ КАРТОК (при скролі/завантаженні) */
+/* ============================================ */
 @keyframes fadeSlideUp {
   from {
     opacity: 0;
@@ -494,7 +522,6 @@ body {
     transform: scale(1) rotate(0deg);
   }
 }
-
 .testimonial-card {
   opacity: 0;
   animation-fill-mode: forwards;
@@ -515,21 +542,173 @@ body {
   animation: zoomRotate 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
 }
 
+/* ============================================ */
+/* FOOTER ТА АДАПТИВ (МОБІЛЬНА ВЕРСІЯ) */
+/* ============================================ */
 footer {
   text-align: center;
   margin-top: 3rem;
   color: #6c757d;
   font-size: 0.85rem;
 }
-@media (max-width: 700px) {
+
+/* Адаптація для планшетів та мобільних пристроїв */
+@media (max-width: 768px) {
+  body {
+    padding: 1.5rem 1rem;
+  }
+  .shop-header h1 {
+    font-size: 2rem;
+  }
   .product-grid {
     gap: 1.2rem;
   }
   .testimonials-grid {
     gap: 1.2rem;
   }
+}
+
+/* ============================================ */
+/* ГОЛОВНЕ НАЛАШТУВАННЯ ДЛЯ ЕКРАНІВ 583px І МЕНШЕ */
+/* ============================================ */
+@media (max-width: 600px) {
+  /* Сітка товарів - одна колонка на всю ширину */
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  /* Картки товарів на всю доступну ширину */
+  .product-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 1.5rem 1rem;
+  }
+
+  /* Контейнер для відгуків - одна колонка */
+  .testimonials-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+  }
+
+  /* Всі картки відгуків мають однакову ширину з картками товарів */
+  .testimonial-card,
+  .testimonial-card.flip-card {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 320px;
+  }
+
+  /* Внутрішні контейнери карток відгуків */
+  .testimonial-card:not(.flip-card) .testimonial-inner,
+  .flip-container,
+  .front,
+  .back {
+    width: 100%;
+    height: auto;
+    min-height: 320px;
+  }
+
+  /* Flip контейнер для другої картки */
+  .flip-container {
+    min-height: 320px;
+  }
+
+  .flipper {
+    min-height: 320px;
+  }
+
+  /* Адаптація тексту всередині карток */
+  .review-text {
+    font-size: 0.8rem;
+  }
+
+  .client-name {
+    font-size: 1.1rem;
+  }
+
+  .avatar {
+    width: 70px;
+    height: 70px;
+  }
+
+  .avatar-fallback {
+    font-size: 2.5rem;
+  }
+
+  /* Зменшення відступів */
+  .front,
+  .back {
+    padding: 1.2rem;
+  }
+
   .testimonial-card {
-    width: 260px;
-    height: 340px;
+    height: auto;
+  }
+
+  /* Глобальний кошик на мобільних */
+  .cart-icon-wrapper {
+    padding: 8px 18px;
+  }
+
+  .cart-icon-svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .cart-total {
+    font-size: 0.8rem;
+    padding: 4px 10px;
+  }
+
+  /* Toast повідомлення на мобільних */
+  .toast-msg {
+    font-size: 0.8rem;
+    white-space: normal;
+    text-align: center;
+    max-width: 90%;
+    padding: 10px 20px;
+  }
+}
+
+/* Додаткові налаштування для дуже маленьких екранів (до 400px) */
+@media (max-width: 400px) {
+  .product-card {
+    padding: 1.2rem 0.8rem;
+  }
+
+  .card-cart-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .card-cart-icon svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .product-title {
+    font-size: 1.1rem;
+  }
+
+  .product-price {
+    font-size: 1.3rem;
+  }
+
+  .buy-btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  .testimonial-card:not(.flip-card) .testimonial-inner,
+  .front,
+  .back {
+    padding: 1rem;
+  }
+
+  .review-text {
+    font-size: 0.75rem;
   }
 }
