@@ -1,4 +1,6 @@
-// ---- 8 товарів з різними типами анімацій ----
+// ============================================
+// ДАНІ ТОВАРІВ (8 карток з різними анімаціями)
+// ============================================
 const products = [
   {
     id: 1,
@@ -58,62 +60,24 @@ const products = [
   },
 ];
 
-// Дані для відгуків (4 картки) – друга має flip-ефект
-const testimonials = [
-  {
-    id: 1,
-    name: 'Андрій',
-    review:
-      'Неймовірна якість! Товар перевершив очікування, а анімація кошика — це просто магія ✨',
-    rating: 5,
-    animHover: 'rotate3d',
-    entryAnim: 'slideUp',
-    hasFlip: false,
-  },
-  {
-    id: 2,
-    name: 'Андрій',
-    review:
-      'Дуже задоволений покупкою. Доставка швидка, а 3D ефекти на сайті вражають!',
-    rating: 5,
-    animHover: null,
-    entryAnim: 'slideLeft',
-    hasFlip: true,
-    backText:
-      '💖 Дякуємо за довіру! Повертайся за новими магічними речами. Знижка 10% на наступне замовлення!',
-  },
-  {
-    id: 3,
-    name: 'Андрій',
-    review:
-      'Креативний підхід до анімацій. Кожна кнопка оживає, робить шопінг цікавим. Буду замовляти ще!',
-    rating: 4,
-    animHover: 'spring',
-    entryAnim: 'slideRight',
-    hasFlip: false,
-  },
-  {
-    id: 4,
-    name: 'Андрій',
-    review:
-      'Відмінний сервіс та оригінальний дизайн. 3D картки відгуків виглядають дуже стильно!',
-    rating: 5,
-    animHover: 'flipX',
-    entryAnim: 'zoomRotate',
-    hasFlip: false,
-  },
-];
-
+// ============================================
+// СТАН КОШИКА
+// ============================================
 let cartItems = [];
 let totalCount = 0;
 let totalPrice = 0;
 
+// ============================================
+// DOM ЕЛЕМЕНТИ
+// ============================================
 const cartCountSpan = document.getElementById('cartCount');
 const cartTotalDisplay = document.getElementById('cartTotalDisplay');
 const productGrid = document.getElementById('productGrid');
 const toastMsgDiv = document.getElementById('toastMsg');
-const testimonialsGrid = document.getElementById('testimonialsGrid');
 
+// ============================================
+// ФУНКЦІЇ ОНОВЛЕННЯ UI КОШИКА
+// ============================================
 function updateCartUI() {
   totalCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   totalPrice = cartItems.reduce(
@@ -142,72 +106,9 @@ function showToast(message, isSuccess = true) {
   }, 1600);
 }
 
-// Додавання товару (повна копія з попереднього рішення)
-function addToCart(product, cardElement, clickEvent) {
-  const existing = cartItems.find(item => item.id === product.id);
-  if (existing) {
-    existing.quantity += 1;
-    showToast(`➕ ${product.name} +1 (тепер ${existing.quantity})`, true);
-  } else {
-    cartItems.push({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      quantity: 1,
-    });
-    showToast(`🛍️ ${product.name} додано!`, true);
-  }
-  updateCartUI();
-
-  const globalCartElem = document.getElementById('globalCartWrapper');
-  const targetRect = globalCartElem.getBoundingClientRect();
-  const targetX = targetRect.left + targetRect.width / 2 - 26;
-  const targetY = targetRect.top + targetRect.height / 2 - 26;
-
-  const startX = clickEvent.clientX - 26;
-  const startY = clickEvent.clientY - 26;
-
-  const flyer = document.createElement('div');
-  flyer.classList.add('flying-item');
-  flyer.style.left = startX + 'px';
-  flyer.style.top = startY + 'px';
-  flyer.style.opacity = '0.95';
-  flyer.innerHTML = `<svg viewBox="0 0 24 24" stroke="white" stroke-width="1.5" fill="none"><path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 16.3C4.3 16.9 4.7 17.5 5.4 17.5H18M18 17.5C16.9 17.5 16 18.4 16 19.5C16 20.6 16.9 21.5 18 21.5C19.1 21.5 20 20.6 20 19.5C20 18.4 19.1 17.5 18 17.5ZM9 19.5C9 20.6 8.1 21.5 7 21.5C5.9 21.5 5 20.6 5 19.5C5 18.4 5.9 17.5 7 17.5C8.1 17.5 9 18.4 9 19.5Z"/></svg>`;
-  document.body.appendChild(flyer);
-
-  requestAnimationFrame(() => {
-    flyer.style.transform = `translate(${targetX - startX}px, ${targetY - startY}px) scale(0.55)`;
-    flyer.style.opacity = '0.5';
-  });
-
-  setTimeout(() => {
-    flyer.remove();
-    globalCartElem.style.transform = 'scale(1.08)';
-    setTimeout(() => {
-      if (globalCartElem) globalCartElem.style.transform = '';
-    }, 180);
-  }, 550);
-
-  const buyBtn = cardElement.querySelector('.buy-btn');
-  const rectBtn = buyBtn.getBoundingClientRect();
-  const plusDiv = document.createElement('div');
-  plusDiv.classList.add('plus-one');
-  plusDiv.innerText = '+1';
-  plusDiv.style.left = rectBtn.left + rectBtn.width / 2 - 20 + 'px';
-  plusDiv.style.top = rectBtn.top - 20 + 'px';
-  document.body.appendChild(plusDiv);
-  setTimeout(() => plusDiv.remove(), 800);
-
-  const cardIcon = cardElement.querySelector('.card-cart-icon');
-  if (cardIcon) {
-    cardIcon.classList.add('pop-animation-card');
-    setTimeout(() => cardIcon.classList.remove('pop-animation-card'), 400);
-  }
-
-  applyUniqueAnimation(product, cardElement, clickEvent);
-}
-
-// 8 унікальних анімацій
+// ============================================
+// 8 УНІКАЛЬНИХ АНІМАЦІЙ ДЛЯ ТОВАРІВ
+// ============================================
 function applyUniqueAnimation(product, cardElement, event) {
   const type = product.animType;
   const cardRect = cardElement.getBoundingClientRect();
@@ -404,22 +305,92 @@ function applyUniqueAnimation(product, cardElement, event) {
   }
 }
 
+// ============================================
+// ДОДАВАННЯ ТОВАРУ В КОШИК З АНІМАЦІЄЮ
+// ============================================
+function addToCart(product, cardElement, clickEvent) {
+  const existing = cartItems.find(item => item.id === product.id);
+  if (existing) {
+    existing.quantity += 1;
+    showToast(`➕ ${product.name} +1 (тепер ${existing.quantity})`, true);
+  } else {
+    cartItems.push({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      quantity: 1,
+    });
+    showToast(`🛍️ ${product.name} додано!`, true);
+  }
+  updateCartUI();
+
+  const globalCartElem = document.getElementById('globalCartWrapper');
+  const targetRect = globalCartElem.getBoundingClientRect();
+  const targetX = targetRect.left + targetRect.width / 2 - 26;
+  const targetY = targetRect.top + targetRect.height / 2 - 26;
+
+  const startX = clickEvent.clientX - 26;
+  const startY = clickEvent.clientY - 26;
+
+  const flyer = document.createElement('div');
+  flyer.classList.add('flying-item');
+  flyer.style.left = startX + 'px';
+  flyer.style.top = startY + 'px';
+  flyer.style.opacity = '0.95';
+  flyer.innerHTML = `<svg viewBox="0 0 24 24" stroke="white" stroke-width="1.5" fill="none"><path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 16.3C4.3 16.9 4.7 17.5 5.4 17.5H18M18 17.5C16.9 17.5 16 18.4 16 19.5C16 20.6 16.9 21.5 18 21.5C19.1 21.5 20 20.6 20 19.5C20 18.4 19.1 17.5 18 17.5ZM9 19.5C9 20.6 8.1 21.5 7 21.5C5.9 21.5 5 20.6 5 19.5C5 18.4 5.9 17.5 7 17.5C8.1 17.5 9 18.4 9 19.5Z"/></svg>`;
+  document.body.appendChild(flyer);
+
+  requestAnimationFrame(() => {
+    flyer.style.transform = `translate(${targetX - startX}px, ${targetY - startY}px) scale(0.55)`;
+    flyer.style.opacity = '0.5';
+  });
+
+  setTimeout(() => {
+    flyer.remove();
+    globalCartElem.style.transform = 'scale(1.08)';
+    setTimeout(() => {
+      if (globalCartElem) globalCartElem.style.transform = '';
+    }, 180);
+  }, 550);
+
+  const buyBtn = cardElement.querySelector('.buy-btn');
+  const rectBtn = buyBtn.getBoundingClientRect();
+  const plusDiv = document.createElement('div');
+  plusDiv.classList.add('plus-one');
+  plusDiv.innerText = '+1';
+  plusDiv.style.left = rectBtn.left + rectBtn.width / 2 - 20 + 'px';
+  plusDiv.style.top = rectBtn.top - 20 + 'px';
+  document.body.appendChild(plusDiv);
+  setTimeout(() => plusDiv.remove(), 800);
+
+  const cardIcon = cardElement.querySelector('.card-cart-icon');
+  if (cardIcon) {
+    cardIcon.classList.add('pop-animation-card');
+    setTimeout(() => cardIcon.classList.remove('pop-animation-card'), 400);
+  }
+
+  applyUniqueAnimation(product, cardElement, clickEvent);
+}
+
+// ============================================
+// РЕНДЕР СІТКИ ТОВАРІВ (8 КАРТОК)
+// ============================================
 function renderProducts() {
   productGrid.innerHTML = '';
   products.forEach(prod => {
     const card = document.createElement('div');
     card.className = `product-card`;
     const cartIconHtml = `
-                <div class="card-cart-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-                        <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 16.3C4.3 16.9 4.7 17.5 5.4 17.5H18M18 17.5C16.9 17.5 16 18.4 16 19.5C16 20.6 16.9 21.5 18 21.5C19.1 21.5 20 20.6 20 19.5C20 18.4 19.1 17.5 18 17.5ZM9 19.5C9 20.6 8.1 21.5 7 21.5C5.9 21.5 5 20.6 5 19.5C5 18.4 5.9 17.5 7 17.5C8.1 17.5 9 18.4 9 19.5Z"/>
-                    </svg>
-                </div>
-                <div class="product-title">${prod.name}</div>
-                <div class="product-price">${prod.price} ₴</div>
-                <button class="buy-btn" data-id="${prod.id}">🛒 Купити</button>
-                <div style="font-size: 0.7rem; margin-top: 8px; opacity:0.7;">✨ ${prod.desc}</div>
-            `;
+            <div class="card-cart-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                    <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 16.3C4.3 16.9 4.7 17.5 5.4 17.5H18M18 17.5C16.9 17.5 16 18.4 16 19.5C16 20.6 16.9 21.5 18 21.5C19.1 21.5 20 20.6 20 19.5C20 18.4 19.1 17.5 18 17.5ZM9 19.5C9 20.6 8.1 21.5 7 21.5C5.9 21.5 5 20.6 5 19.5C5 18.4 5.9 17.5 7 17.5C8.1 17.5 9 18.4 9 19.5Z"/>
+                </svg>
+            </div>
+            <div class="product-title">${prod.name}</div>
+            <div class="product-price">${prod.price} ₴</div>
+            <button class="buy-btn" data-id="${prod.id}">🛒 Купити</button>
+            <div style="font-size: 0.7rem; margin-top: 8px; opacity:0.7;">✨ ${prod.desc}</div>
+        `;
     card.innerHTML = cartIconHtml;
     productGrid.appendChild(card);
     const buyBtn = card.querySelector('.buy-btn');
@@ -430,74 +401,31 @@ function renderProducts() {
   });
 }
 
-// Рендер 3D карток відгуків (друга з flip)
-function renderTestimonials() {
-  testimonialsGrid.innerHTML = '';
-  testimonials.forEach((t, idx) => {
-    if (t.hasFlip) {
-      // Спеціальна flip-картка (друга)
-      const card = document.createElement('div');
-      card.className = 'testimonial-card flip-card';
-      card.setAttribute('data-entry', t.entryAnim);
-      card.classList.add('animate-in');
-      card.style.height = '340px';
-      card.style.width = '280px';
-      const avatarSrc = `image/avatar.png?v=${t.id}`;
-      card.innerHTML = `
-                    <div class="flip-container" style="width:100%; height:100%;">
-                        <div class="flipper" id="flipper-${t.id}">
-                            <div class="front">
-                                <div class="avatar">
-                                    <img src="${avatarSrc}" alt="avatar" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'avatar-fallback\'>👤</div>';">
-                                </div>
-                                <div class="client-name">${t.name}</div>
-                                <div class="review-text">“${t.review}”</div>
-                                <div class="rating">${'★'.repeat(t.rating)}${'☆'.repeat(5 - t.rating)}</div>
-                            </div>
-                            <div class="back">
-                                <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎁</div>
-                                <div class="client-name" style="color:#e67e22;">Секретний подарунок!</div>
-                                <div class="review-text" style="color:#2c3e4e;">${t.backText}</div>
-                                <div class="extra-message">Наведіть щоб побачити зворотній бік ✨</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-      testimonialsGrid.appendChild(card);
-      // Додаємо подію наведення для flip
-      const flipper = card.querySelector('.flipper');
-      card.addEventListener('mouseenter', () => {
-        if (flipper) flipper.style.transform = 'rotateY(180deg)';
-      });
-      card.addEventListener('mouseleave', () => {
-        if (flipper) flipper.style.transform = 'rotateY(0deg)';
-      });
-    } else {
-      // Звичайні 3D картки без flip, але з hover-ефектами
-      const card = document.createElement('div');
-      card.className = 'testimonial-card';
-      card.setAttribute('data-anim', t.animHover);
-      card.setAttribute('data-entry', t.entryAnim);
-      card.classList.add('animate-in');
-      card.style.width = '280px';
-      card.style.height = '340px';
-      const avatarSrc = `image/avatar.png?v=${t.id}`;
-      card.innerHTML = `
-                    <div class="testimonial-inner">
-                        <div class="avatar">
-                            <img src="${avatarSrc}" alt="avatar" onerror="this.onerror=null; this.parentElement.querySelector('.avatar').innerHTML='<div class=\'avatar-fallback\'>👤</div>';">
-                        </div>
-                        <div class="client-name">${t.name}</div>
-                        <div class="review-text">“${t.review}”</div>
-                        <div class="rating">${'★'.repeat(t.rating)}${'☆'.repeat(5 - t.rating)}</div>
-                    </div>
-                `;
-      testimonialsGrid.appendChild(card);
-    }
+// ============================================
+// АНІМАЦІЯ ПОЯВИ КАРТОК ВІДГУКІВ
+// ============================================
+function initTestimonialsAnimation() {
+  const testimonialCards = document.querySelectorAll('.testimonial-card');
+  testimonialCards.forEach(card => {
+    card.classList.add('animate-in');
   });
+
+  // Налаштування flip-картки (№2) - обробники подій для перевороту
+  const flipCard = document.querySelector('.flip-card');
+  if (flipCard) {
+    const flipper = flipCard.querySelector('.flipper');
+    flipCard.addEventListener('mouseenter', () => {
+      if (flipper) flipper.style.transform = 'rotateY(180deg)';
+    });
+    flipCard.addEventListener('mouseleave', () => {
+      if (flipper) flipper.style.transform = 'rotateY(0deg)';
+    });
+  }
 }
 
-// Глобальний клік на корзину
+// ============================================
+// ОБРОБНИК ГЛОБАЛЬНОГО КОШИКА
+// ============================================
 document.getElementById('globalCartWrapper')?.addEventListener('click', () => {
   if (totalCount === 0)
     showToast('🛒 Кошик порожній, оберіть магічний товар!', false);
@@ -513,6 +441,9 @@ document.getElementById('globalCartWrapper')?.addEventListener('click', () => {
   }, 150);
 });
 
+// ============================================
+// ІНІЦІАЛІЗАЦІЯ
+// ============================================
 renderProducts();
-renderTestimonials();
+initTestimonialsAnimation();
 updateCartUI();
