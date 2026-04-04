@@ -6,11 +6,12 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
-    <title>Магічний магазин | 8 анімацій кошика + 3D Flip відгуки</title>
+    <title>Magictore | Анімаційний магазин з 3D відгуками</title>
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
     <div class="container">
+      <!-- Глобальний кошик (верхній бар) -->
       <div class="cart-global">
         <div class="cart-icon-wrapper" id="globalCartWrapper">
           <div class="cart-badge">
@@ -30,23 +31,143 @@
           <div class="cart-total" id="cartTotalDisplay">0 ₴</div>
         </div>
       </div>
+
+      <!-- Заголовок -->
       <div class="shop-header">
         <h1>🎭 8 унікальних анімацій кошика</h1>
         <p>Кожен товар має свій власний магічний ефект ✨</p>
       </div>
+
+      <!-- ========== СІТКА ТОВАРІВ (8 карток) ========== -->
+      <!-- Картка товару №1 - Кристал душі (bounceAndShake) -->
       <div class="product-grid" id="productGrid"></div>
 
-      <!-- СЕКЦІЯ 3D ВІДГУКІВ (друга картка з FLIP) -->
+      <!-- ========== СЕКЦІЯ 3D ВІДГУКІВ (4 картки з різними анімаціями) ========== -->
       <div class="testimonials-section">
         <div class="section-title">🌟 <span>3D Відгуки клієнтів</span> 🌟</div>
-        <div class="testimonials-grid" id="testimonialsGrid"></div>
+        <div class="testimonials-grid" id="testimonialsGrid">
+          <!-- Картка відгуку №1 - (rotate3d + slideUp) -->
+          <div
+            class="testimonial-card"
+            data-anim="rotate3d"
+            data-entry="slideUp"
+            data-id="1"
+          >
+            <div class="testimonial-inner">
+              <div class="avatar">
+                <img
+                  src="image/avatar.png"
+                  alt="avatar"
+                  onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'avatar-fallback\'>👤</div>';"
+                />
+              </div>
+              <div class="client-name">Андрій</div>
+              <div class="review-text">
+                “Неймовірна якість! Товар перевершив очікування, а анімація
+                кошика — це просто магія ✨”
+              </div>
+              <div class="rating">★★★★★</div>
+            </div>
+          </div>
+
+          <!-- Картка відгуку №2 - (FLIP 3D при наведенні, slideLeft) -->
+          <div
+            class="testimonial-card flip-card"
+            data-entry="slideLeft"
+            data-id="2"
+          >
+            <div class="flip-container">
+              <div class="flipper" id="flipper-2">
+                <div class="front">
+                  <div class="avatar">
+                    <img
+                      src="image/avatar.png"
+                      alt="avatar"
+                      onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'avatar-fallback\'>👤</div>';"
+                    />
+                  </div>
+                  <div class="client-name">Андрій</div>
+                  <div class="review-text">
+                    “Дуже задоволений покупкою. Доставка швидка, а 3D ефекти на
+                    сайті вражають!”
+                  </div>
+                  <div class="rating">★★★★★</div>
+                </div>
+                <div class="back">
+                  <div class="back-icon">🎁</div>
+                  <div class="client-name" style="color: #e67e22">
+                    Секретний подарунок!
+                  </div>
+                  <div class="review-text">
+                    💖 Дякуємо за довіру! Повертайся за новими магічними речами.
+                    Знижка 10% на наступне замовлення!
+                  </div>
+                  <div class="extra-message">
+                    Наведіть щоб побачити зворотній бік ✨
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Картка відгуку №3 - (spring + slideRight) -->
+          <div
+            class="testimonial-card"
+            data-anim="spring"
+            data-entry="slideRight"
+            data-id="3"
+          >
+            <div class="testimonial-inner">
+              <div class="avatar">
+                <img
+                  src="image/avatar.png"
+                  alt="avatar"
+                  onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'avatar-fallback\'>👤</div>';"
+                />
+              </div>
+              <div class="client-name">Андрій</div>
+              <div class="review-text">
+                “Креативний підхід до анімацій. Кожна кнопка оживає, робить
+                шопінг цікавим. Буду замовляти ще!”
+              </div>
+              <div class="rating">★★★★☆</div>
+            </div>
+          </div>
+
+          <!-- Картка відгуку №4 - (flipX + zoomRotate) -->
+          <div
+            class="testimonial-card"
+            data-anim="flipX"
+            data-entry="zoomRotate"
+            data-id="4"
+          >
+            <div class="testimonial-inner">
+              <div class="avatar">
+                <img
+                  src="image/avatar.png"
+                  alt="avatar"
+                  onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'avatar-fallback\'>👤</div>';"
+                />
+              </div>
+              <div class="client-name">Андрій</div>
+              <div class="review-text">
+                “Відмінний сервіс та оригінальний дизайн. 3D картки відгуків
+                виглядають дуже стильно!”
+              </div>
+              <div class="rating">★★★★★</div>
+            </div>
+          </div>
+        </div>
       </div>
       <footer>
         ⭐ Друга картка відгуку ПОВЕРТАЄТЬСЯ при наведенні! Інші мають 3D
         ефекти.
       </footer>
     </div>
+
+    <!-- Toast повідомлення -->
     <div id="toastMsg" class="toast-msg"></div>
+
     <script src="js/main.js"></script>
   </body>
 </html>
